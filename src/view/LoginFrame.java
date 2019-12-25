@@ -191,7 +191,7 @@ public class LoginFrame extends javax.swing.JFrame {
         String pass = txtPass.getText();
         if (user.equals("admin") && pass.equals("admin")) {
             JOptionPane.showMessageDialog(null, "Berhasil Login");
-            new FramePenjualan().setVisible(true);
+            new SideBarMenu().setVisible(true);
             dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Gagal");
