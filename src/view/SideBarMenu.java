@@ -7,6 +7,7 @@ package view;
 
 import java.awt.event.KeyEvent;
 import java.text.NumberFormat;
+import javax.swing.JOptionPane;
 import javax.swing.table.TableColumn;
 import model.ModelBarang;
 import model.ModelPenjualan;
@@ -410,25 +411,37 @@ public class SideBarMenu extends javax.swing.JFrame {
     private void cboBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboBarangActionPerformed
         barang = (ModelBarang)cboBarang.getSelectedItem();
         lblHarga.setText(NumberFormat.getNumberInstance().format(barang.getHarga()));
+        txtQuantity.setText("");
     }//GEN-LAST:event_cboBarangActionPerformed
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
-        String[] data = new String[5];
-        double harga, jumlah=0;
-        int qty=0;
 
-        data[0]=barang.getNamaBarang();
-        harga=barang.getHarga();
-        data[1]=String.valueOf(barang.getHarga());
-        qty=Integer.parseInt(txtQuantity.getText());
-        data[2]=txtQuantity.getText();
-        jumlah=harga*qty;
-        data[3]=String.valueOf(jumlah);
+       
+        
+        
+         if (txtQuantity.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Isi quantity !");
+        } else {
+            String[] data = new String[5];
+            double harga, jumlah=0;
+            int qty=0;
 
-        penjualan.getTabel().addRow(data);
-        lblSubtotal.setText(NumberFormat.getNumberInstance().format(penjualan.countSubtotal()));
+            data[0]=barang.getNamaBarang();
+            harga=barang.getHarga();
+            data[1]=String.valueOf(barang.getHarga());
+            qty=Integer.parseInt(txtQuantity.getText());
+            data[2]=txtQuantity.getText();
+            jumlah=harga*qty;
+            data[3]=String.valueOf(jumlah);
+            penjualan.getTabel().addRow(data);
+            lblSubtotal.setText(NumberFormat.getNumberInstance().format(penjualan.countSubtotal()));
 
-        cboBarang.requestFocus();
+            cboBarang.requestFocus();
+            txtQuantity.setText("");
+            
+        }
+
+        
     }//GEN-LAST:event_btnSimpanActionPerformed
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
