@@ -261,22 +261,22 @@ public class FramePenjualan extends javax.swing.JFrame {
 // masih error tolong diperbaiki //
     
     private void btnBayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBayarActionPerformed
-        int status = 0;
-            try {
-              
-                    DefaultTableModel model = (DefaultTableModel) tblBarang.getModel();
-                    status = con.insert(new ModelBarang(tfNrp.getText(), tfNama.getText(), Float.valueOf(tfIpk.getText())));
-                    refreshTable();
-                    clearTf();
-                   
-            } catch (SQLException ex) {
-                Logger.getLogger(MahasiswaFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            if (status == 1) {
-                JOptionPane.showMessageDialog(this, "Pesanan Berhasil Ditambahkan");   
-            }else{
-                JOptionPane.showMessageDialog(this, "Pesanan Gagal Ditambahkan");
-            }
+//        int status = 0;
+//            try {
+//              
+//                    DefaultTableModel model = (DefaultTableModel) tblBarang.getModel();
+//                    status = con.insert(new ModelBarang(tfNrp.getText(), tfNama.getText(), Float.valueOf(tfIpk.getText())));
+//                    refreshTable();
+//                    clearTf();
+//                   
+//            } catch (SQLException ex) {
+//                Logger.getLogger(MahasiswaFrame.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            if (status == 1) {
+//                JOptionPane.showMessageDialog(this, "Pesanan Berhasil Ditambahkan");   
+//            }else{
+//                JOptionPane.showMessageDialog(this, "Pesanan Gagal Ditambahkan");
+//            }
     }//GEN-LAST:event_btnBayarActionPerformed
 
     /**
