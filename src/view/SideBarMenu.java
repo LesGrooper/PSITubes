@@ -562,7 +562,7 @@ public class SideBarMenu extends javax.swing.JFrame {
     private void btnCetakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCetakActionPerformed
         try {
             JasperPrint jasperPrint = JasperFillManager.fillReport(
-                    "src/report/PenjualanReport.jasper",
+                    "src/report/TransaksiReport.jasper",
                     null,koneksi.getConnection());
             JasperViewer.viewReport(jasperPrint, true);
         }catch(JRException e){
