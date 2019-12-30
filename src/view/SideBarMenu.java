@@ -1,18 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
+import com.koneksi.koneksi;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import model.ModelBarang;
 import model.ModelPenjualan;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -21,6 +27,13 @@ import model.ModelPenjualan;
 public class SideBarMenu extends javax.swing.JFrame {
     ModelBarang barang;
     ModelPenjualan penjualan=new ModelPenjualan();
+    
+    
+    Statement stt;
+    Statement stt2;
+    ResultSet rss;
+    DefaultTableModel model;
+    String tgl;
 
     /**
      * Creates new form SideBarMenu
@@ -70,6 +83,8 @@ public class SideBarMenu extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        btnTambahMenu = new javax.swing.JButton();
+        btnTransaksi = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
         penjualanPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -95,10 +110,52 @@ public class SideBarMenu extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jTextField1 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
+        tambahMenuPanel = new javax.swing.JPanel();
+        btn_simpan = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jLabel16 = new javax.swing.JLabel();
+        txtidmakanan = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tbl_makanan = new javax.swing.JTable();
+        txtharga = new javax.swing.JTextField();
+        txtnamapaket = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
+        jSeparator3 = new javax.swing.JSeparator();
+        jSeparator4 = new javax.swing.JSeparator();
+        jSeparator5 = new javax.swing.JSeparator();
+        transaksiPanel = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        lblNoTransaksi = new javax.swing.JLabel();
+        lblKodePaketT = new javax.swing.JLabel();
+        lblNamaPaket = new javax.swing.JLabel();
+        lblHarga1 = new javax.swing.JLabel();
+        lblJumlahT = new javax.swing.JLabel();
+        txtTglTransaksi = new javax.swing.JTextField();
+        txt_no_transaksi = new javax.swing.JTextField();
+        txt_nama_paket = new javax.swing.JTextField();
+        cmb_kode = new javax.swing.JComboBox();
+        txt_jumlah_t = new javax.swing.JTextField();
+        txt_harga_t = new javax.swing.JTextField();
+        btnBeli = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tbl_transaksi = new javax.swing.JTable();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel14 = new javax.swing.JLabel();
+        btnTransSelanjut = new javax.swing.JButton();
+        txt_id_kasir = new javax.swing.JTextField();
+        txt_total_semua = new javax.swing.JTextField();
+        lblTotal = new javax.swing.JLabel();
+        btnHapus1 = new javax.swing.JButton();
+        btnCetak = new javax.swing.JButton();
+        jSeparator6 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        menuPanel.setBackground(new java.awt.Color(0, 0, 0));
+        menuPanel.setBackground(new java.awt.Color(153, 153, 255));
 
         btnHPenjualan.setForeground(new java.awt.Color(255, 255, 255));
         btnHPenjualan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/button/default.png"))); // NOI18N
@@ -138,6 +195,20 @@ public class SideBarMenu extends javax.swing.JFrame {
             }
         });
 
+        btnTambahMenu.setText("Tambah Menu");
+        btnTambahMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahMenuActionPerformed(evt);
+            }
+        });
+
+        btnTransaksi.setText("Transaksi");
+        btnTransaksi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTransaksiActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
         menuPanel.setLayout(menuPanelLayout);
         menuPanelLayout.setHorizontalGroup(
@@ -156,9 +227,16 @@ public class SideBarMenu extends javax.swing.JFrame {
                         .addGap(66, 66, 66)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(menuPanelLayout.createSequentialGroup()
-                        .addGap(64, 64, 64)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(40, Short.MAX_VALUE))
+                        .addGap(59, 59, 59)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(menuPanelLayout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(menuPanelLayout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(btnTransaksi))
+                            .addComponent(btnTambahMenu))))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         menuPanelLayout.setVerticalGroup(
             menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,7 +249,11 @@ public class SideBarMenu extends javax.swing.JFrame {
                 .addComponent(btnPenjualan1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnHPenjualan, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnTambahMenu)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnTransaksi)
+                .addGap(36, 36, 36)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -379,6 +461,205 @@ public class SideBarMenu extends javax.swing.JFrame {
 
         mainPanel.add(historiPanel, "card3");
 
+        tambahMenuPanel.setPreferredSize(new java.awt.Dimension(600, 500));
+        tambahMenuPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btn_simpan.setText("Simpan");
+        btn_simpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_simpanActionPerformed(evt);
+            }
+        });
+        tambahMenuPanel.add(btn_simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, -1));
+
+        jLabel15.setFont(new java.awt.Font("Tekton Pro", 0, 18)); // NOI18N
+        jLabel15.setText("Tambah Paket Makanan");
+        tambahMenuPanel.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(193, 34, -1, -1));
+
+        jButton3.setText("Ubah");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        tambahMenuPanel.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, 66, -1));
+
+        jButton4.setText("Hapus");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        tambahMenuPanel.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 270, -1, -1));
+
+        jLabel16.setText("Harga");
+        tambahMenuPanel.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, -1, -1));
+
+        txtidmakanan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtidmakananActionPerformed(evt);
+            }
+        });
+        tambahMenuPanel.add(txtidmakanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 100, 220, 30));
+
+        jLabel17.setText("ID Paket Makanan");
+        tambahMenuPanel.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 113, -1, -1));
+
+        jLabel18.setText("Nama Paket Makanan");
+        tambahMenuPanel.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, -1, -1));
+
+        tbl_makanan.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tbl_makanan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_makananMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(tbl_makanan);
+
+        tambahMenuPanel.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 509, 179));
+
+        txtharga.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txthargaKeyTyped(evt);
+            }
+        });
+        tambahMenuPanel.add(txtharga, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 180, 220, 30));
+        tambahMenuPanel.add(txtnamapaket, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 150, 220, -1));
+        tambahMenuPanel.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 520, 10));
+        tambahMenuPanel.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 132, 500, 10));
+        tambahMenuPanel.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 500, 10));
+        tambahMenuPanel.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 500, 10));
+
+        mainPanel.add(tambahMenuPanel, "card2");
+
+        transaksiPanel.setPreferredSize(new java.awt.Dimension(600, 500));
+        transaksiPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel13.setText("Tanggal Transaksi");
+        transaksiPanel.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 100, -1, -1));
+
+        lblNoTransaksi.setText("No Transaksi");
+        transaksiPanel.add(lblNoTransaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, -1, -1));
+
+        lblKodePaketT.setText("Kode Paket Makanan");
+        transaksiPanel.add(lblKodePaketT, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, -1, -1));
+
+        lblNamaPaket.setText("Nama Paket");
+        transaksiPanel.add(lblNamaPaket, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, -1, -1));
+
+        lblHarga1.setText("Harga");
+        transaksiPanel.add(lblHarga1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, -1, -1));
+
+        lblJumlahT.setText("Jumlah");
+        transaksiPanel.add(lblJumlahT, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, -1, -1));
+
+        txtTglTransaksi.setEditable(false);
+        txtTglTransaksi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTglTransaksiActionPerformed(evt);
+            }
+        });
+        transaksiPanel.add(txtTglTransaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 250, -1));
+
+        txt_no_transaksi.setEditable(false);
+        transaksiPanel.add(txt_no_transaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 93, -1));
+
+        txt_nama_paket.setEnabled(false);
+        transaksiPanel.add(txt_nama_paket, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 250, -1));
+
+        cmb_kode.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmb_kodeItemStateChanged(evt);
+            }
+        });
+        transaksiPanel.add(cmb_kode, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 190, 250, -1));
+
+        txt_jumlah_t.setText("1");
+        txt_jumlah_t.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_jumlah_tKeyTyped(evt);
+            }
+        });
+        transaksiPanel.add(txt_jumlah_t, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 280, 250, -1));
+
+        txt_harga_t.setEnabled(false);
+        transaksiPanel.add(txt_harga_t, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 250, 250, -1));
+
+        btnBeli.setText("Beli");
+        btnBeli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBeliActionPerformed(evt);
+            }
+        });
+        transaksiPanel.add(btnBeli, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, -1, -1));
+
+        tbl_transaksi.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(tbl_transaksi);
+
+        transaksiPanel.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 495, 95));
+        transaksiPanel.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 420, 10));
+
+        jLabel14.setFont(new java.awt.Font("Tekton Pro", 0, 18)); // NOI18N
+        jLabel14.setText("TRANSAKSI MAKANAN");
+        transaksiPanel.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, -1, -1));
+
+        btnTransSelanjut.setText("Transaksi Selanjutnya");
+        btnTransSelanjut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTransSelanjutActionPerformed(evt);
+            }
+        });
+        transaksiPanel.add(btnTransSelanjut, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, 150, -1));
+
+        txt_id_kasir.setEditable(false);
+        txt_id_kasir.setBorder(null);
+        transaksiPanel.add(txt_id_kasir, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 10, 50, -1));
+
+        txt_total_semua.setEditable(false);
+        transaksiPanel.add(txt_total_semua, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 460, 142, -1));
+
+        lblTotal.setText("Total");
+        transaksiPanel.add(lblTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 460, -1, -1));
+
+        btnHapus1.setText("Hapus");
+        btnHapus1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapus1ActionPerformed(evt);
+            }
+        });
+        transaksiPanel.add(btnHapus1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 320, -1, -1));
+
+        btnCetak.setText("Cetak");
+        btnCetak.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCetakActionPerformed(evt);
+            }
+        });
+        transaksiPanel.add(btnCetak, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 460, -1, -1));
+        transaksiPanel.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 200, -1));
+
+        mainPanel.add(transaksiPanel, "card4");
+
         javax.swing.GroupLayout parentPanelLayout = new javax.swing.GroupLayout(parentPanel);
         parentPanel.setLayout(parentPanelLayout);
         parentPanelLayout.setHorizontalGroup(
@@ -432,18 +713,31 @@ public class SideBarMenu extends javax.swing.JFrame {
         mainPanel.revalidate();
     }//GEN-LAST:event_btnHPenjualanActionPerformed
 
-    private void cboBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboBarangActionPerformed
-        barang = (ModelBarang)cboBarang.getSelectedItem();
-        lblHarga.setText(NumberFormat.getNumberInstance().format(barang.getHarga()));
-        txtQuantity.setText("");
-    }//GEN-LAST:event_cboBarangActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        int dialogBtn = JOptionPane.YES_NO_CANCEL_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Anda yakin ingin keluar ?", "PERINGATAN", dialogBtn);
+        
+        if (dialogResult == 0) {
+            LoginFrame lf = new LoginFrame();
+            lf.setVisible(true);
+            dispose();
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtQuantityKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtQuantityKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)
+        btnSimpan.requestFocus();
+    }//GEN-LAST:event_txtQuantityKeyPressed
+
+    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
+        penjualan.getTabel().removeRow(tblBarang.getSelectedRow());
+        lblSubtotal.setText(NumberFormat.getNumberInstance().format(penjualan.countSubtotal()));
+    }//GEN-LAST:event_btnHapusActionPerformed
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
 
-       
-        
-        
-         if (txtQuantity.getText().equals("")){
+        if (txtQuantity.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Isi quantity !");
         } else {
             String[] data = new String[5];
@@ -462,33 +756,232 @@ public class SideBarMenu extends javax.swing.JFrame {
 
             cboBarang.requestFocus();
             txtQuantity.setText("");
-            
+
         }
 
-        
     }//GEN-LAST:event_btnSimpanActionPerformed
 
-    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
-        penjualan.getTabel().removeRow(tblBarang.getSelectedRow());
-        lblSubtotal.setText(NumberFormat.getNumberInstance().format(penjualan.countSubtotal()));
-    }//GEN-LAST:event_btnHapusActionPerformed
+    private void cboBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboBarangActionPerformed
+        barang = (ModelBarang)cboBarang.getSelectedItem();
+        lblHarga.setText(NumberFormat.getNumberInstance().format(barang.getHarga()));
+        txtQuantity.setText("");
+    }//GEN-LAST:event_cboBarangActionPerformed
 
-    private void txtQuantityKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtQuantityKeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER)
-        btnSimpan.requestFocus();
-    }//GEN-LAST:event_txtQuantityKeyPressed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnTambahMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahMenuActionPerformed
         // TODO add your handling code here:
-        int dialogBtn = JOptionPane.YES_NO_CANCEL_OPTION;
-        int dialogResult = JOptionPane.showConfirmDialog(this, "Anda yakin ingin keluar ?", "PERINGATAN", dialogBtn);
-        
-        if (dialogResult == 0) {
-            LoginFrame lf = new LoginFrame();
-            lf.setVisible(true);
-            dispose();
+        mainPanel.removeAll();
+        mainPanel.repaint();
+        mainPanel.revalidate();
+        //add
+        mainPanel.add(tambahMenuPanel);
+        mainPanel.repaint();
+        mainPanel.revalidate();
+    }//GEN-LAST:event_btnTambahMenuActionPerformed
+
+    private void txtTglTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTglTransaksiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTglTransaksiActionPerformed
+
+    private void cmb_kodeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmb_kodeItemStateChanged
+        Connection con = koneksi.getConnection();
+        ResultSet rss2;
+        String sql = "SELECT * FROM paket_makanan WHERE id_paket = '"+cmb_kode.getSelectedItem().toString()+"'";
+        try {
+            stt = con.createStatement();
+            rss2 = stt.executeQuery(sql);
+            if(rss2.next()){
+                txt_nama_paket.setText(rss2.getString("nama_paket"));
+                txt_harga_t.setText(rss2.getString("harga"));
+            }
+            rss2.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_cmb_kodeItemStateChanged
+
+    private void txt_jumlah_tKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_jumlah_tKeyTyped
+        char c = evt.getKeyChar();
+        if (!((c >= '0') && (c <= '9') && txt_jumlah_t.getText().length() < 10
+            || (c == KeyEvent.VK_BACK_SPACE)
+            || (c == KeyEvent.VK_DELETE))) {
+        getToolkit().beep();
+        evt.consume();
+        }
+    }//GEN-LAST:event_txt_jumlah_tKeyTyped
+
+    private void btnBeliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBeliActionPerformed
+        Connection con = koneksi.getConnection();
+        if(txt_jumlah_t.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Data tidak boleh kosong");
+        }
+        else{
+            int total = Integer.parseInt(txt_harga_t.getText()) * Integer.parseInt(txt_jumlah_t.getText());
+            int simpan2 = 0;
+            if (txt_total_semua.getText().equals("")) {
+                simpan2 = 0;
+            } else {
+                simpan2 = Integer.valueOf(txt_total_semua.getText());
+            }
+
+            String sql2 = "INSERT INTO detail_transaksi(id_transaksi,id_paket,harga,jumlah,total_harga) VALUES('"+ txt_no_transaksi.getText() + "','"+ cmb_kode.getSelectedItem().toString() + "','"+ txt_harga_t.getText() + "','"+ txt_jumlah_t.getText() + "','" + total + "')";
+            try {
+                simpan_no();
+                stt2 = con.createStatement();
+                stt2.executeUpdate(sql2);
+                txt_total_semua.setText(String.valueOf(simpan2 + total));
+                JOptionPane.showMessageDialog(this, "Barang Berhasil Dibeli");
+                tabel_transaksi();
+                tampil_tabel_transaksi();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnBeliActionPerformed
+
+    private void btnTransSelanjutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransSelanjutActionPerformed
+        no_transaksi();
+        tabel_transaksi();
+        tampil_tabel_transaksi();
+        txt_total_semua.setText("");
+    }//GEN-LAST:event_btnTransSelanjutActionPerformed
+
+    private void btnHapus1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapus1ActionPerformed
+        Connection con = koneksi.getConnection();
+        int row = tbl_transaksi.getSelectedRow();
+        try {
+            stt = con.createStatement();
+            if(row == -1){
+                JOptionPane.showMessageDialog(this, "Anda Belum Memilih Tabel");
+            }
+            else{
+                int harga = Integer.parseInt((String) tbl_transaksi.getModel().getValueAt(row, 5));
+                int total = Integer.parseInt(txt_total_semua.getText());
+                String sql = "DELETE FROM detail_transaksi WHERE id_detail_transaksi = '"+tbl_transaksi.getModel().getValueAt(row, 0)+"'";
+                stt.executeUpdate(sql);
+                JOptionPane.showMessageDialog(null, "Berhasil Dihapus");
+                txt_total_semua.setText(String.valueOf(total-harga));
+                tabel_transaksi();
+                tampil_tabel_transaksi();
+                clear();
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btnHapus1ActionPerformed
+
+    private void btnCetakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCetakActionPerformed
+        try {
+            JasperPrint jasperPrint = JasperFillManager.fillReport(
+                    "src/report/PenjualanReport.jasper",
+                    null,koneksi.getConnection());
+            JasperViewer.viewReport(jasperPrint, true);
+        }catch(JRException e){
+            JOptionPane.showMessageDialog(this, e);
+        }
+    }//GEN-LAST:event_btnCetakActionPerformed
+
+    private void btn_simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanActionPerformed
+        Connection con = koneksi.getConnection();
+        try {
+            if(btn_simpan.getText().equals("Batal")){
+                clear();
+                btn_simpan.setText("Simpan");
+            }
+            else{
+                if(txtidmakanan.getText().equals("")||txtnamapaket.getText().equals("")||txtharga.getText().equals("")){
+                    JOptionPane.showMessageDialog(this, "Mohon diisi data yang kosong", "Pesan", JOptionPane.WARNING_MESSAGE);
+                }
+                else{
+                    stt = con.createStatement();
+                    String sql = "INSERT INTO paket_makanan VALUES('"+txtidmakanan.getText()+"', '"+txtnamapaket.getText()+"','"+txtharga.getText()+"')";
+                    stt.executeUpdate(sql);
+                    JOptionPane.showMessageDialog(rootPane, "Berhasil Masuk");
+                    tabel_makanan();
+                    tampil_tabel();
+                    clear();
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Gagal");
+        }
+    }//GEN-LAST:event_btn_simpanActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Connection con = koneksi.getConnection();
+        int row = tbl_makanan.getSelectedRow();
+        try {
+            stt = con.createStatement();
+            if(row == -1){
+                JOptionPane.showMessageDialog(this, "Mohon pilih tabel terlebih dahulu","Pesan",JOptionPane.WARNING_MESSAGE);
+            }
+            else{
+                String sql = "UPDATE paket_makanan SET nama_paket = '"+txtnamapaket.getText()+"', harga = '"+txtharga.getText()+"' WHERE id_paket = '"+txtidmakanan.getText()+"'";
+                stt.executeUpdate(sql);
+                JOptionPane.showMessageDialog(null, "Berhasil Diubah");
+                tabel_makanan();
+                tampil_tabel();
+                clear();
+                btn_simpan.setText("Simpan");
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        Connection con = koneksi.getConnection();
+        int row = tbl_makanan.getSelectedRow();
+        try {
+            stt = con.createStatement();
+            if(row == -1){
+                JOptionPane.showMessageDialog(this, "Mohon pilih tabel terlebih dahulu","Pesan",JOptionPane.WARNING_MESSAGE);
+            }
+            else{
+                String sql = "DELETE FROM paket_makanan WHERE id_paket = '"+txtidmakanan.getText()+"'";
+                stt.executeUpdate(sql);
+                JOptionPane.showMessageDialog(null, "Berhasil Dihapus");
+                tabel_makanan();
+                tampil_tabel();
+                clear();
+                btn_simpan.setText("Simpan");
+            }
+        } catch (Exception e) {
+        }
+        
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void txtidmakananActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtidmakananActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtidmakananActionPerformed
+
+    private void tbl_makananMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_makananMouseClicked
+        int row = tbl_makanan.getSelectedRow();
+        txtidmakanan.setText(tbl_makanan.getValueAt(row, 0).toString());
+        txtnamapaket.setText(tbl_makanan.getValueAt(row, 1).toString());
+        txtharga.setText(tbl_makanan.getValueAt(row, 2).toString());
+        txtidmakanan.setEnabled(false);
+        btn_simpan.setText("Batal");
+    }//GEN-LAST:event_tbl_makananMouseClicked
+
+    private void txthargaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txthargaKeyTyped
+        char c = evt.getKeyChar();
+        if (!((c >= '0') && (c <= '9') && txtharga.getText().length() < 10
+            || (c == KeyEvent.VK_BACK_SPACE)
+            || (c == KeyEvent.VK_DELETE))) {
+        getToolkit().beep();
+        evt.consume();
+        }
+    }//GEN-LAST:event_txthargaKeyTyped
+
+    private void btnTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransaksiActionPerformed
+        // TODO add your handling code here:
+        mainPanel.removeAll();
+        mainPanel.repaint();
+        mainPanel.revalidate();
+        //add
+        mainPanel.add(transaksiPanel);
+        mainPanel.repaint();
+        mainPanel.revalidate();
+    }//GEN-LAST:event_btnTransaksiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -527,18 +1020,34 @@ public class SideBarMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBeli;
+    private javax.swing.JButton btnCetak;
     private javax.swing.JButton btnHPenjualan;
     private javax.swing.JButton btnHapus;
+    private javax.swing.JButton btnHapus1;
     private javax.swing.JButton btnPenjualan1;
     private javax.swing.JButton btnSimpan;
+    private javax.swing.JButton btnTambahMenu;
+    private javax.swing.JButton btnTransSelanjut;
+    private javax.swing.JButton btnTransaksi;
+    private javax.swing.JButton btn_simpan;
     private javax.swing.JComboBox cboBarang;
+    private javax.swing.JComboBox cmb_kode;
     private javax.swing.JPanel historiPanel;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -549,15 +1058,156 @@ public class SideBarMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblHarga;
+    private javax.swing.JLabel lblHarga1;
+    private javax.swing.JLabel lblJumlahT;
+    private javax.swing.JLabel lblKodePaketT;
+    private javax.swing.JLabel lblNamaPaket;
+    private javax.swing.JLabel lblNoTransaksi;
     private javax.swing.JLabel lblSubtotal;
+    private javax.swing.JLabel lblTotal;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel menuPanel;
     private javax.swing.JPanel parentPanel;
     private javax.swing.JPanel penjualanPanel;
+    private javax.swing.JPanel tambahMenuPanel;
     private javax.swing.JTable tblBarang;
     private javax.swing.JTable tblHistory;
+    private javax.swing.JTable tbl_makanan;
+    private javax.swing.JTable tbl_transaksi;
+    private javax.swing.JPanel transaksiPanel;
     private javax.swing.JTextField txtQuantity;
+    private javax.swing.JTextField txtTglTransaksi;
+    private javax.swing.JTextField txt_harga_t;
+    private javax.swing.JTextField txt_id_kasir;
+    private javax.swing.JTextField txt_jumlah_t;
+    private javax.swing.JTextField txt_nama_paket;
+    private javax.swing.JTextField txt_no_transaksi;
+    private javax.swing.JTextField txt_total_semua;
+    private javax.swing.JTextField txtharga;
+    private javax.swing.JTextField txtidmakanan;
+    private javax.swing.JTextField txtnamapaket;
     // End of variables declaration//GEN-END:variables
+
+    private void tabel_makanan() {
+        model = new DefaultTableModel();
+        tbl_makanan.setModel(model);
+        model.addColumn("Id Paket Makanan");
+        model.addColumn("Nama Paket Makanan");
+        model.addColumn("Harga");
+    }
+
+    private void tampil_tabel() {
+        Connection con = koneksi.getConnection();
+       try {
+           stt = con.createStatement();
+           String sql = "SELECT * FROM paket_makanan";
+           rss = stt.executeQuery(sql);
+           while(rss.next()){
+               Object[] o;
+               o = new Object[4];
+               o[0] = rss.getString("id_paket");
+               o[1] = rss.getString("nama_paket");
+               o[2] = rss.getString("harga");
+               model.addRow(o);
+           }
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+    }
+
+    private void clear() {
+        txtharga.setText("");
+        txtidmakanan.setText("");
+        txtnamapaket.setText("");
+        txtidmakanan.setEnabled(true);
+    }
+
+    private void tabel_transaksi() {
+        model = new DefaultTableModel();
+        tbl_transaksi.setModel(model);
+        model.addColumn("Id Detail Transaksi");
+        model.addColumn("No Transaksi");
+        model.addColumn("Id paket");
+        model.addColumn("Harga");
+        model.addColumn("Jumlah");
+        model.addColumn("Total Harga");
+    }
+
+    private void tampil_tabel_transaksi() {
+        Connection con = koneksi.getConnection();
+       try {
+           stt = con.createStatement();
+           String sql = "SELECT * FROM detail_transaksi WHERE id_transaksi = '"+txt_no_transaksi.getText()+"'";
+           rss = stt.executeQuery(sql);
+           while(rss.next()){
+               Object[] o;
+               o = new Object[6];
+               o[0] = rss.getString(1);
+               o[1] = rss.getString(2);
+               o[2] = rss.getString(3);
+               o[3] = rss.getString(4);
+               o[4] = rss.getString(5);
+               o[5] = rss.getString(6);
+               model.addRow(o);
+           }
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+    }
+
+    private void simpan_no() {
+        Connection con = koneksi.getConnection();
+        String sql = "INSERT INTO transaksi VALUES('"+txt_no_transaksi.getText()+"','"+txt_id_kasir.getText()+"','"+tgl+"')";
+        try {
+            stt = con.createStatement();
+            stt.executeUpdate(sql);
+        } catch (Exception e) {
+        }
+    }
+
+    public void no_transaksi() {
+        Connection con = koneksi.getConnection();
+        String sql = "SELECT id_transaksi FROM transaksi";
+        try {
+            stt = con.createStatement();
+            rss = stt.executeQuery(sql);
+            if(rss.last()){
+                txt_no_transaksi.setText(String.valueOf(rss.getInt(1)+1));
+            }
+            else
+                txt_no_transaksi.setText("1");
+        } catch (Exception e) {
+        }
+    }
+    
+    public void kode_makanan(){
+        Connection con = koneksi.getConnection();
+        String sql = "SELECT * FROM paket_makanan";
+        try {
+         stt = con.createStatement();
+         rss= stt.executeQuery(sql);
+         while(rss.next()){
+             cmb_kode.addItem(rss.getString("id_paket"));
+         }
+        } catch (Exception e) {
+        }
+    }
+    
+    public void tglskrg(){
+        Date skrg= new Date();
+        SimpleDateFormat format= new SimpleDateFormat("dd MMMM yyyy");
+        SimpleDateFormat format2= new SimpleDateFormat("yyyy-MM-dd");
+        tgl = format2.format(skrg);
+        txtTglTransaksi.setText(format.format(skrg));
+    }
 }
