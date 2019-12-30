@@ -11,6 +11,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import model.ModelBarang;
@@ -59,6 +60,10 @@ public class SideBarMenu extends javax.swing.JFrame {
         this.setLocation(x, y);
         
   
+    }
+    
+     public JTextField id_kasir(){
+        return txt_id_kasir;
     }
     
     private void fillComboBarang(){
@@ -128,6 +133,7 @@ public class SideBarMenu extends javax.swing.JFrame {
         btnHapus1 = new javax.swing.JButton();
         btnCetak = new javax.swing.JButton();
         jSeparator6 = new javax.swing.JSeparator();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -380,7 +386,7 @@ public class SideBarMenu extends javax.swing.JFrame {
         transaksiPanel.add(btnTransSelanjut, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, 150, -1));
 
         txt_id_kasir.setEditable(false);
-        txt_id_kasir.setBorder(null);
+        txt_id_kasir.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         transaksiPanel.add(txt_id_kasir, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 10, 50, -1));
 
         txt_total_semua.setEditable(false);
@@ -405,6 +411,9 @@ public class SideBarMenu extends javax.swing.JFrame {
         });
         transaksiPanel.add(btnCetak, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 460, -1, -1));
         transaksiPanel.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 200, -1));
+
+        jLabel1.setText("ID Kasir");
+        transaksiPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, -1, -1));
 
         mainPanel.add(transaksiPanel, "card4");
 
@@ -645,13 +654,7 @@ public class SideBarMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_tbl_makananMouseClicked
 
     private void txthargaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txthargaKeyTyped
-        char c = evt.getKeyChar();
-        if (!((c >= '0') && (c <= '9') && txtharga.getText().length() < 10
-            || (c == KeyEvent.VK_BACK_SPACE)
-            || (c == KeyEvent.VK_DELETE))) {
-        getToolkit().beep();
-        evt.consume();
-        }
+
     }//GEN-LAST:event_txthargaKeyTyped
 
     private void btnTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransaksiActionPerformed
@@ -713,6 +716,7 @@ public class SideBarMenu extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;

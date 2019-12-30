@@ -6,6 +6,10 @@
 
 package view;
 
+import com.koneksi.koneksi;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,6 +19,9 @@ import javax.swing.JOptionPane;
 public class LoginFrame extends javax.swing.JFrame {
 
     /** Creates new form Login */
+    
+    Statement stt;
+    ResultSet rss;
     public LoginFrame() {
         initComponents();
     }
@@ -185,18 +192,24 @@ public class LoginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
-        
-        String user = txtUser.getText();
-        String pass = txtPass.getText();
-        if (user.equals("admin") && pass.equals("admin")) {
-            JOptionPane.showMessageDialog(null, "Berhasil Login");
-            new SideBarMenu().setVisible(true);
-            dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Gagal");
+       Connection con = koneksi.getConnection();
+        SideBarMenu sbr = new SideBarMenu();
+        try{
+            stt = con.createStatement();
+            String sql = "SELECT * FROM kasir WHERE username = '"+txtUser.getText()+"' and password = md5('"+String.valueOf(txtPass.getPassword())+"')";
+            rss = stt.executeQuery(sql);
+            if(rss.next()){
+                JOptionPane.showMessageDialog(rootPane, "Login Berhasil");
+                sbr.id_kasir().setText(rss.getString("id_kasir"));
+                sbr.setVisible(true);
+                this.dispose();
+            }
+            else
+                JOptionPane.showMessageDialog(rootPane, "Gagal Login", "Pesan", JOptionPane.ERROR_MESSAGE);
         }
-       
+        catch(Exception e){
+            e.printStackTrace();
+        }
        
     }//GEN-LAST:event_btnLoginActionPerformed
 
