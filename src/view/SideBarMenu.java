@@ -41,6 +41,13 @@ public class SideBarMenu extends javax.swing.JFrame {
     public SideBarMenu() {
         initComponents();
         fillComboBarang();
+        tabel_makanan();
+        tampil_tabel();
+        tabel_transaksi();
+        tampil_tabel_transaksi();
+        tglskrg();
+        no_transaksi();
+        kode_makanan();
         
         // mengambil ukuran layar
         Dimension layar = Toolkit.getDefaultToolkit().getScreenSize();
