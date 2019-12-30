@@ -3,12 +3,13 @@ package controller;
 import view.SideBarMenu;
 
 public class ProdukController {
-//    SideBarMenu sideBarMenu;
-//    public ProdukController(){
-//        sideBarMenu = new SideBarMenu();
-//    }
+    SideBarMenu sideBarMenu;
+    public ProdukController(){
+        sideBarMenu = new SideBarMenu();
+    }
     
-//    public int tambahProduk(){
-//        
-//    }
+    public int tambahPaketProduk(){
+        
+        return tambahPaketProduk();
+    }
 }
