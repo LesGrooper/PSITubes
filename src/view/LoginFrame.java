@@ -6,6 +6,10 @@
 
 package view;
 
+import com.koneksi.koneksi;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,6 +19,9 @@ import javax.swing.JOptionPane;
 public class LoginFrame extends javax.swing.JFrame {
 
     /** Creates new form Login */
+    
+    Statement stt;
+    ResultSet rss;
     public LoginFrame() {
         initComponents();
     }
@@ -48,12 +55,13 @@ public class LoginFrame extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 255));
+        jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel1.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("GACOR");
 
-        jLabel6.setIcon(new javax.swing.ImageIcon("D:\\Universitas Pasundan Bandung\\Semester 5\\PSI\\login.png")); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\Erdika Rhamadan K\\Desktop\\psi\\login.png")); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -86,6 +94,11 @@ public class LoginFrame extends javax.swing.JFrame {
         txtUser.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         txtUser.setForeground(new java.awt.Color(51, 51, 51));
         txtUser.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
+        txtUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUserActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(51, 51, 51));
@@ -185,18 +198,24 @@ public class LoginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
-        
-        String user = txtUser.getText();
-        String pass = txtPass.getText();
-        if (user.equals("admin") && pass.equals("admin")) {
-            JOptionPane.showMessageDialog(null, "Berhasil Login");
-            new SideBarMenu().setVisible(true);
-            dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Gagal");
+       Connection con = koneksi.getConnection();
+        SideBarMenu sbr = new SideBarMenu();
+        try{
+            stt = con.createStatement();
+            String sql = "SELECT * FROM kasir WHERE username = '"+txtUser.getText()+"' and password = md5('"+String.valueOf(txtPass.getPassword())+"')";
+            rss = stt.executeQuery(sql);
+            if(rss.next()){
+                JOptionPane.showMessageDialog(rootPane, "Login Berhasil");
+                sbr.id_kasir().setText(rss.getString("id_kasir"));
+                sbr.setVisible(true);
+                this.dispose();
+            }
+            else
+                JOptionPane.showMessageDialog(rootPane, "Gagal Login", "Pesan", JOptionPane.ERROR_MESSAGE);
         }
-       
+        catch(Exception e){
+            e.printStackTrace();
+        }
        
     }//GEN-LAST:event_btnLoginActionPerformed
 
@@ -205,6 +224,10 @@ public class LoginFrame extends javax.swing.JFrame {
         
         dispose();
     }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void txtUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUserActionPerformed
 
     /**
      * @param args the command line arguments

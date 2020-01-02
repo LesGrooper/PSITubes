@@ -2,6 +2,19 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group/>
+=======
+        <group>
+            <file>file:/C:/Users/Erdika%20Rhamadan%20K/Desktop/psi/PSITubes/PSITubes/src/view/LoginFrame.java</file>
+            <file>file:/C:/Users/Erdika%20Rhamadan%20K/Desktop/psi/PSITubes/PSITubes/src/report/TransaksiReport.jrxml</file>
+            <file>file:/C:/Users/Erdika%20Rhamadan%20K/Desktop/psi/PSITubes/PSITubes/src/view/SideBarMenu.java</file>
+            <file>file:/C:/Users/Erdika%20Rhamadan%20K/Desktop/psi/PSITubes/PSITubes/src/com/koneksi/koneksi.java</file>
+            <file>file:/C:/Users/Erdika%20Rhamadan%20K/Desktop/psi/PSITubes/PSITubes/src/main/Main.java</file>
+            <file>file:/C:/Users/Erdika%20Rhamadan%20K/Desktop/psi/PSITubes/PSITubes/src/view/FramePenjualan.java</file>
+            <file>file:/C:/Users/Erdika%20Rhamadan%20K/Desktop/psi/PSITubes/PSITubes/src/model/data/PesananModel.java</file>
+            <file>file:/C:/Users/Erdika%20Rhamadan%20K/Desktop/psi/PSITubes/PSITubes/src/view/HistoryFrame.java</file>
+        </group>
+>>>>>>> b4ee7c6076c4c50c5d438be08cd431fda5c6fc3e
     </open-files>
 </project-private>
