@@ -596,7 +596,7 @@ public class SideBarMenu extends javax.swing.JFrame {
         }
     }                                          
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
         Connection con = koneksi.getConnection();
         int row = tbl_makanan.getSelectedRow();
         try {

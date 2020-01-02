@@ -1,5 +1,6 @@
 package model.data;
 
+import com.koneksi.koneksi;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import model.pojo.ModelBarangDAO;
 import utilities.DatabaseUtilities;
 
@@ -55,6 +57,31 @@ public class PesananModelDAO {
             }
         }
     }
+    
+    public List<ModelBarangDAO> tampilTabel() throws SQLException {
+        List<ModelBarangDAO> brgDAO = null;
+        ResultSet rss;
+        Statement stt;
+        DefaultTableModel model = null;
+        Connection con = koneksi.getConnection();
+        try {
+            stt = con.createStatement();
+            String sql = "SELECT * FROM paket_makanan";
+            rss = stt.executeQuery(sql);
+            while (rss.next()) {
+                Object[] o;
+                o = new Object[4];
+                o[0] = rss.getString("id_paket");
+                o[1] = rss.getString("nama_paket");
+                o[2] = rss.getString("harga");
+                model.addRow(o);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return brgDAO;
+    }
+
     
     
 }
