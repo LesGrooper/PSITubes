@@ -13,8 +13,8 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import model.ModelBarang;
-import model.ModelPenjualan;
+import model.pojo.ModelBarangDAO;
+import model.pojo.ModelPenjualanDAO;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -25,8 +25,8 @@ import net.sf.jasperreports.view.JasperViewer;
  * @author Erdika Rhamadan K
  */
 public class SideBarMenu extends javax.swing.JFrame {
-    ModelBarang barang;
-    ModelPenjualan penjualan=new ModelPenjualan();
+    ModelBarangDAO barang;
+    ModelPenjualanDAO penjualan=new ModelPenjualanDAO();
     
     
     Statement stt;
@@ -56,10 +56,10 @@ public class SideBarMenu extends javax.swing.JFrame {
     }
     
     private void fillComboBarang(){
-        ModelBarang barang1 = new ModelBarang("Nasi Goreng", 15000);
-        ModelBarang barang2 = new ModelBarang("Soto Ayam", 12000);
-        ModelBarang barang3 = new ModelBarang("Ayam Goreng", 9000);
-        ModelBarang barang4 = new ModelBarang("Nasi Putih", 4000);
+        ModelBarangDAO barang1 = new ModelBarangDAO("Nasi Goreng", 15000);
+        ModelBarangDAO barang2 = new ModelBarangDAO("Soto Ayam", 12000);
+        ModelBarangDAO barang3 = new ModelBarangDAO("Ayam Goreng", 9000);
+        ModelBarangDAO barang4 = new ModelBarangDAO("Nasi Putih", 4000);
         
         cboBarang.addItem(barang1);
         cboBarang.addItem(barang2);
@@ -762,7 +762,7 @@ public class SideBarMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSimpanActionPerformed
 
     private void cboBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboBarangActionPerformed
-        barang = (ModelBarang)cboBarang.getSelectedItem();
+        barang = (ModelBarangDAO)cboBarang.getSelectedItem();
         lblHarga.setText(NumberFormat.getNumberInstance().format(barang.getHarga()));
         txtQuantity.setText("");
     }//GEN-LAST:event_cboBarangActionPerformed

@@ -1,21 +1,22 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package model.pojo;
 
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author master
+ * @author MSI
  */
-public class ModelPenjualan {
-    private double subTotal=0;
+public class ModelPenjualanDAO {
+     private double subTotal=0;
     private double total=0;
     private DefaultTableModel tabel = new DefaultTableModel();
     
-    public ModelPenjualan(){
+    public ModelPenjualanDAO(){
         getTabel().addColumn("Barang");
         getTabel().addColumn("Harga");
         getTabel().addColumn("Qty");

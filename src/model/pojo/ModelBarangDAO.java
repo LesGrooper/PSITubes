@@ -1,25 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package model;
 
-/**
- *
- * @author user
- */
-public class ModelBarang {
+package model.pojo;
+
+public class ModelBarangDAO {
     private String namaBarang;
     private int harga;
     private int qty;
     private int total;
 
-    public ModelBarang(String namaBarang, int harga) {
+    public ModelBarangDAO(String namaBarang, int harga) {
         this.namaBarang = namaBarang;
         this.harga = harga;
     }
     
-    public ModelBarang(){
+    public ModelBarangDAO(){
         
     }
 
@@ -78,5 +71,4 @@ public class ModelBarang {
     public int getTotal() {
         return total;
     }
-    
 }
