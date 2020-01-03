@@ -42,13 +42,13 @@ public class SideBarMenu extends javax.swing.JFrame {
     public SideBarMenu() {
         initComponents();
         fillComboBarang();
-        tabel_makanan();
-        tampil_tabel();
-        tabel_transaksi();
-        tampil_tabel_transaksi();
-        tglskrg();
-        no_transaksi();
-        kode_makanan();
+        tabelMakanan();
+        tampilTabel();
+        tabelTransaksi();
+        tampilTabelTransaksi();
+        tglSkrg();
+        noTransaksi();
+        kodeMakanan();
         
         // mengambil ukuran layar
         Dimension layar = Toolkit.getDefaultToolkit().getScreenSize();
@@ -521,8 +521,8 @@ public class SideBarMenu extends javax.swing.JFrame {
                 stt2.executeUpdate(sql2);
                 txt_total_semua.setText(String.valueOf(simpan2 + total));
                 JOptionPane.showMessageDialog(this, "Barang Berhasil Dibeli");
-                tabel_transaksi();
-                tampil_tabel_transaksi();
+                tabelTransaksi();
+                tampilTabelTransaksi();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -530,9 +530,9 @@ public class SideBarMenu extends javax.swing.JFrame {
     }                                       
 
     private void btnTransSelanjutActionPerformed(java.awt.event.ActionEvent evt) {                                                 
-        no_transaksi();
-        tabel_transaksi();
-        tampil_tabel_transaksi();
+        noTransaksi();
+        tabelTransaksi();
+        tampilTabelTransaksi();
         txt_total_semua.setText("");
     }                                                
 
@@ -551,8 +551,8 @@ public class SideBarMenu extends javax.swing.JFrame {
                 stt.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null, "Berhasil Dihapus");
                 txt_total_semua.setText(String.valueOf(total-harga));
-                tabel_transaksi();
-                tampil_tabel_transaksi();
+                tabelTransaksi();
+                tampilTabelTransaksi();
                 clear();
             }
         } catch (Exception e) {
@@ -586,8 +586,8 @@ public class SideBarMenu extends javax.swing.JFrame {
                     String sql = "INSERT INTO paket_makanan VALUES('"+txtidmakanan.getText()+"', '"+txtnamapaket.getText()+"','"+txtharga.getText()+"')";
                     stt.executeUpdate(sql);
                     JOptionPane.showMessageDialog(rootPane, "Berhasil Masuk");
-                    tabel_makanan();
-                    tampil_tabel();
+                    tabelMakanan();
+                    tampilTabel();
                     clear();
                 }
             }
@@ -608,8 +608,8 @@ public class SideBarMenu extends javax.swing.JFrame {
                 String sql = "UPDATE paket_makanan SET nama_paket = '"+txtnamapaket.getText()+"', harga = '"+txtharga.getText()+"' WHERE id_paket = '"+txtidmakanan.getText()+"'";
                 stt.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null, "Berhasil Diubah");
-                tabel_makanan();
-                tampil_tabel();
+                tabelMakanan();
+                tampilTabel();
                 clear();
                 btn_simpan.setText("Simpan");
             }
@@ -629,8 +629,8 @@ public class SideBarMenu extends javax.swing.JFrame {
                 String sql = "DELETE FROM paket_makanan WHERE id_paket = '"+txtidmakanan.getText()+"'";
                 stt.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null, "Berhasil Dihapus");
-                tabel_makanan();
-                tampil_tabel();
+                tabelMakanan();
+                tampilTabel();
                 clear();
                 btn_simpan.setText("Simpan");
             }
@@ -758,7 +758,7 @@ public class SideBarMenu extends javax.swing.JFrame {
     private javax.swing.JTextField txtnamapaket;
     // End of variables declaration                   
 
-    private void tabel_makanan() {
+    private void tabelMakanan() {
         model = new DefaultTableModel();
         tbl_makanan.setModel(model);
         model.addColumn("Id Paket Makanan");
@@ -766,7 +766,7 @@ public class SideBarMenu extends javax.swing.JFrame {
         model.addColumn("Harga");
     }
 
-    private void tampil_tabel() {
+    private void tampilTabel() {
         Connection con = koneksi.getConnection();
        try {
            stt = con.createStatement();
@@ -792,7 +792,7 @@ public class SideBarMenu extends javax.swing.JFrame {
         txtidmakanan.setEnabled(true);
     }
 
-    private void tabel_transaksi() {
+    private void tabelTransaksi() {
         model = new DefaultTableModel();
         tbl_transaksi.setModel(model);
         model.addColumn("Id Detail Transaksi");
@@ -803,7 +803,7 @@ public class SideBarMenu extends javax.swing.JFrame {
         model.addColumn("Total Harga");
     }
 
-    private void tampil_tabel_transaksi() {
+    private void tampilTabelTransaksi() {
         Connection con = koneksi.getConnection();
        try {
            stt = con.createStatement();
@@ -835,7 +835,7 @@ public class SideBarMenu extends javax.swing.JFrame {
         }
     }
 
-    public void no_transaksi() {
+    public void noTransaksi() {
         Connection con = koneksi.getConnection();
         String sql = "SELECT id_transaksi FROM transaksi";
         try {
@@ -850,7 +850,7 @@ public class SideBarMenu extends javax.swing.JFrame {
         }
     }
     
-    public void kode_makanan(){
+    public void kodeMakanan(){
         Connection con = koneksi.getConnection();
         String sql = "SELECT * FROM paket_makanan";
         try {
@@ -863,7 +863,7 @@ public class SideBarMenu extends javax.swing.JFrame {
         }
     }
     
-    public void tglskrg(){
+    public void tglSkrg(){
         Date skrg= new Date();
         SimpleDateFormat format= new SimpleDateFormat("dd MMMM yyyy");
         SimpleDateFormat format2= new SimpleDateFormat("yyyy-MM-dd");
